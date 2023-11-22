@@ -1,0 +1,41 @@
+version: '3.8'
+
+networks:
+    rede_Um:
+       driver: bridge
+
+volumes:
+  bancoUm:
+  bancoDois:
+
+services:
+
+  mysql:
+    image: mysql:8.0.30
+    container_name: rgsistema-mysql
+    working_dir: /db
+    networks:
+      - rede_Um
+    volumes:
+      - .:/db
+    environment:
+      - MYSQL_ROOT_PASSWORD=rgsistema
+      - MYSQL_DATABASE=rgsistema
+      - MYSQL_USER=rgsistema
+      - MYSQL_PASSWORD=rgsistema
+
+  api-nodejs:
+    image: api-nodejs
+    container_name: api-nodejs 
+    build: 
+        context: .
+        dockerfile: ./Dockerfile
+    networks:
+          - rede_Um
+    depends_on:
+          - mysql
+    ports:
+        - 3001:3030
+    volumes:
+        - bancoDois:/challenge-by-hubbi
+

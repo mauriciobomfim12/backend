@@ -1,0 +1,28 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Trasaction {
+  id      Int      @id @default(autoincrement())
+  type    Int
+  date    DateTime
+  product String
+  value   Int
+  seller  String
+}
+
+model Cadastro {
+  id    Int    @id @default(autoincrement())
+  nome  String
+  email String
+  senha String
+  cargo String
+}
